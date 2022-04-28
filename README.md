@@ -38,5 +38,5 @@ command to run if program contains helper info
 Contributors names and contact info
 
 Jayaram J 
-[Jayaram J](jayaramjawahar@gmail.com)
+[Jayaram J](mailto:jayaramjawahar@gmail.com?subject=Mail from AWS Tag github repo)
 
