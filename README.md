@@ -10,10 +10,10 @@ A python serverless lambda function that would terminate all EC2 instances which
 
 ### Dependencies
 
-* AWS Lambda funtion 
+* AWS Lambda function 
 * DynamoDB instance
 * EventBridge CloudWatch Events
-* python 3.8
+* Python 3.8
 * boto3 SDK
 * smtplib
 
@@ -36,10 +36,10 @@ A python serverless lambda function that would terminate all EC2 instances which
  
 3) Create a AWS DynamoDB Table
    * Give the table name **'EC2_Instances'**
-   * Add **'Instance_id'** as Partition key with string type
+   * Add **'Instance_id'** as a Partition key with string type
  
  
-4) Create a trigger to call the lambda funtion hourly
+4) Create a trigger to call the lambda function hourly
     * Create a new trigger using EventBridge CloudWatch Events
     * create a new rule with any suitable name and the given schedule expression **cron(0 * * * ? *)**
    
@@ -47,7 +47,7 @@ A python serverless lambda function that would terminate all EC2 instances which
 
 ### Executing program
 
-* To test the working of the lambda function, create a empty test event
+* To test the working of the lambda function, create an empty test event
 * Run the test event and if the execution completes, then all the configurations are set properly
 
 
@@ -55,9 +55,9 @@ A python serverless lambda function that would terminate all EC2 instances which
 
 Frequently encountered problems
 * EC2 instances and the lambda funtions are set-up in different AWS regions
-* Execution time is too less to complete proper execution
+* Execution time is too less to complete the proper execution
 * Environment variables not set properly
-* Lambda funtion is added to a default VPC resource
+* Lambda function is added to a default VPC resource
 * Mail service preventing less secure apps from accessing the service 
 * Using mail password instead of APP password with 2-factor authentication enabled
 
