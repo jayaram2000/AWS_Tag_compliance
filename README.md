@@ -20,7 +20,7 @@ A python serverless lambda function that would terminate all EC2 instances which
 ### Deployment Procedure
 
 1) Create an AWS Lambda function in the same region as the EC2 instances 
-    * Choose author from scratch option
+    * Choose author from scratch option and give a suitable name to the function
     * Use Python 3.8 runtime and default role with basic Lambda permissions
     * Add AmazonEC2FullAccess, AmazonDynamoDBFullAccess policies to the default role created
     * Copy-paste the lambda_funtion.py file contents onto the AWS lambda lambda_funtion.py file
