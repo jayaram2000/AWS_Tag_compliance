@@ -41,7 +41,7 @@ A python serverless lambda function that would terminate all EC2 instances which
  
 4) Create a trigger to call the lambda function hourly
     * Create a new trigger using EventBridge CloudWatch Events
-    * Create a new rule with any suitable name and with the given schedule expression **cron(0 * * * ? *)**
+    * Create a new rule with any suitable name and with the given schedule expression <b>cron(0 * * * ? *)</b>
    
 
 
@@ -60,6 +60,7 @@ Frequently encountered problems
 * Lambda function is added to a default VPC resource
 * Mail service preventing less secure apps from accessing the service 
 * Using mail password instead of APP password with 2-factor authentication enabled
+* Created DynamoDB resource is not provisioned in same AWS region
 
 ## Authors
 
