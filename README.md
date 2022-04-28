@@ -66,5 +66,5 @@ Frequently encountered problems
 
 Contributor's names and contact info
 
-Jayaram J 
+Jayaram J <br>
 Email: jayaramjawahar@gmail.com
