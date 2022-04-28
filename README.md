@@ -30,8 +30,8 @@ A python serverless lambda function that would terminate all EC2 instances which
     * Enable 2-factor authentication for the mail account and generate an app password
     * Add the following environment variables under the configuration->environment variables in lambda function 
       ~~~
-      <b>mail_username : yourmail@example.com</b>
-      <b>mail_password : your_password</b>
+      mail_username : yourmail@example.com
+      mail_password : your_password
       ~~~
  
 3) Create a AWS DynamoDB Table
