@@ -19,11 +19,24 @@ A python serverless lambda function which would terminate all EC2 instances whic
 
 ### Deployment Procedure
 
-1) Create a AWS Lambda funtion in the same region as the EC2 instances 
+1) Create an AWS Lambda funtion in the same region as the EC2 instances 
     * Use python 3.9 runtime and default role with basic Lambda permissions
     * Add AmazonEC2FullAccess, AmazonDynamoDBFullAccess policies to the default role created
-3) 
-4)  How/where to download your program
+    * 
+
+2) Add environment variables for Email account to notify users 
+    * Enable 2-factor authentication for the mail account and generate an app password
+    * Add the following envirnoment varibales under the configuration->environment variables in lambda funtion 
+      ~~~
+      mail_username : yourmail@example.com
+      mail_password : your_password
+      ~~~
+      
+3) Create a trigger to call the lambda funtion hourly
+    * Create a new trigger using EventBridge CloudWatch Events
+    * create a new rule with any suitable name and the given schedule expression <b>cron(0 * * * ? *)
+   
+5)  How/where to download your program
 * Any modifications needed to be made to files/folders
 
 ### Executing program
