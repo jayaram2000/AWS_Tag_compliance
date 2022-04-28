@@ -35,13 +35,13 @@ A python serverless lambda function that would terminate all EC2 instances which
       ~~~
  
 3) Create a AWS DynamoDB Table
-   * Give the table name **'EC2_Instances'**
+   * Give the table name as **'EC2_Instances'**
    * Add **'Instance_id'** as a Partition key with string type
  
  
 4) Create a trigger to call the lambda function hourly
     * Create a new trigger using EventBridge CloudWatch Events
-    * create a new rule with any suitable name and the given schedule expression **cron(0 * * * ? *)**
+    * Create a new rule with any suitable name and with the given schedule expression **cron(0 * * * ? *)**
    
 
 
