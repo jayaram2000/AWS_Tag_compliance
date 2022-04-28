@@ -1,10 +1,10 @@
-import json
 import boto3
 import os
-from pprint import pprint
 import smtplib
+
 from email.message import EmailMessage
 from datetime import datetime
+
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('EC2_Instances')
@@ -30,7 +30,7 @@ def add_item(instance_id):
                     'Instance_id': instance_id,
                     'time_stamp':  t})
                     
-                    
+    print("Added Item",instance_id)               
 
 def get_item(instance_id):
     """ Funtion to get item from DynamoDB"""
@@ -58,8 +58,8 @@ def time_diff(t):
     duration = cur_time-old_time                     
     duration_in_s = duration.total_seconds() 
     
-    print(duration_in_s)
-    # checking if the time exceed 6hrs
+    print("Duration:",duration_in_s)
+    # checking if the time exceeded 6hrs
     if duration_in_s >= 21600 :
         return True
     else :
@@ -67,10 +67,10 @@ def time_diff(t):
 
 def notifer_status_check(instance_id,instance_mail,params):
     """ Check if the EC2 instances need to be notified or terminated """
-    print(instance_id,params)
+    
     
     item=get_item(instance_id)
-    print("item get response",item)
+    
     
     joined_string = ",".join(params)
    
@@ -78,14 +78,14 @@ def notifer_status_check(instance_id,instance_mail,params):
         add_item(instance_id)
         msg_body=f"You don\'t seem to have the {joined_string} tags set for the instance {instance_id}. Please update them within 6 hours to continue using the EC2 instance."
         send_email(instance_id,instance_mail,msg_body)
-        print("inside add items")
+        
     
     elif time_diff(item) :
-        #delete_item(instance_id)
         msg_body=f"Your AWS EC2 Instance with id {instance_id} is being terminated since the required tags {joined_string} haven\'t been updated."
         send_email(instance_id,instance_mail,msg_body)
+        print("Terminating the instances")
         ec2.Instance(instance_id).terminate()
-        print("inside delete items")
+        
     
     
    
@@ -102,10 +102,7 @@ def send_email(instance_id,instance_mail,msg_body):
     
    
     msg = EmailMessage()
-    print("MSG BODY",msg_body)
     msg.set_content(msg_body)
-    #msg.set_content('You don\'t seem to have the {joined_string} tags set for the instance  {instance_id}. Please update them within 6 hours to continue using the EC2 instance.')
-    #msg.set_content("{msg_body}%(joined_string,instance_id)")
     msg['Subject'] = 'Update Tags in AWS EC2 Instance'
     msg['From'] = gmail_user
     msg['To'] = instance_mail
@@ -123,6 +120,8 @@ def send_email(instance_id,instance_mail,msg_body):
    
 def remove_terminated():
     """ Remove expired items from DynamoDB"""
+    
+    print("Removing terminated instances")
     for instance in ec2.instances.all().filter(
         Filters=[{'Name': 'instance-state-name', 'Values': ['shutting-down','terminated']}]):
         delete_item(instance.id)
@@ -134,11 +133,12 @@ def check_instances():
     
     for instance in ec2.instances.all().filter(
         Filters=[{'Name': 'instance-state-name', 'Values': ['pending','running','stopping','stopped']}]):
-        print (instance.tags)
-        #print(instance.id)
+     
         instance_name=None
         instance_envi=None
         instance_mail=None
+       
+       
         for tags in instance.tags:
             if tags["Key"] == 'Name':
                 instance_name = tags["Value"]
@@ -147,7 +147,8 @@ def check_instances():
             elif tags["Key"] == 'created by':
                 instance_mail = tags["Value"]
         
-        print("Name",instance_name,"Environment",instance_envi,"Created BY",instance_mail)
+        
+        print("Tags Name-",instance_name,", Environment-",instance_envi,", Created by-",instance_mail, ", InstanceID ",instance.id)
         
         if instance_name == None or instance_envi == None :
             params=[]
